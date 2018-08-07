@@ -1,0 +1,24 @@
+applications:
+- name:    trial_i048564
+  memory:  128M
+  buildpack: nodejs_buildpack
+  services:
+  - xsuaa
+- name: approuter
+  host: cppmindia-approuteri048564trial
+  path: approuter
+  buildpack: nodejs_buildpack
+  memory: 128M
+  env:
+    SAP_JWT_TRUST_ACL: "[{\"clientid\" : \"*\", \"identityzone\" : \"*\"}]"
+    destinations: >
+      [
+        {
+          "name": "application",
+          "url": "https://triali048564.cfapps.eu10.hana.ondemand.com/",
+          "forwardAuthToken": true
+        }
+      ]
+    TENANT_HOST_PATTERN: "^(.*)-approuteri048564trial.cfapps.eu10.hana.ondemand.com"
+  services:
+  - xsuaa
